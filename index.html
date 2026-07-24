@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>MindTech Industries · African Quantum AI</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap');
@@ -27,7 +27,11 @@
             --gold-glow: rgba(255, 215, 0, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: var(--black);
@@ -42,7 +46,7 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,102,255,0.015) 2px, rgba(0,102,255,0.015) 4px);
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 102, 255, 0.015) 2px, rgba(0, 102, 255, 0.015) 4px);
             pointer-events: none;
             z-index: 1000;
         }
@@ -60,43 +64,79 @@
         .grid-bg {
             position: fixed;
             inset: 0;
-            background-image: linear-gradient(rgba(0,102,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,255,0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
         }
 
         .scan-sweep {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0,102,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.4), transparent);
             animation: sweep 8s linear infinite;
             pointer-events: none;
             z-index: 998;
         }
 
         @keyframes sweep {
-            0% { top: 0; opacity: 1; }
-            95% { opacity: 0.3; }
-            100% { top: 100vh; opacity: 0; }
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.3;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
         }
 
         .corner {
             position: fixed;
-            width: 30px; height: 30px;
+            width: 30px;
+            height: 30px;
             border-color: rgba(212, 175, 55, 0.3);
             border-style: solid;
             z-index: 500;
         }
-        .corner-tl { top: 16px; left: 16px; border-width: 2px 0 0 2px; }
-        .corner-tr { top: 16px; right: 16px; border-width: 2px 2px 0 0; }
-        .corner-bl { bottom: 16px; left: 16px; border-width: 0 0 2px 2px; }
-        .corner-br { bottom: 16px; right: 16px; border-width: 0 2px 2px 0; }
+        .corner-tl {
+            top: 16px;
+            left: 16px;
+            border-width: 2px 0 0 2px;
+        }
+        .corner-tr {
+            top: 16px;
+            right: 16px;
+            border-width: 2px 2px 0 0;
+        }
+        .corner-bl {
+            bottom: 16px;
+            left: 16px;
+            border-width: 0 0 2px 2px;
+        }
+        .corner-br {
+            bottom: 16px;
+            right: 16px;
+            border-width: 0 2px 2px 0;
+        }
 
-        .blink-title { animation: blinkText 3s infinite; display: inline-block; }
+        .blink-title {
+            animation: blinkText 3s infinite;
+            display: inline-block;
+        }
         @keyframes blinkText {
-            0%, 90%, 100% { opacity: 1; }
-            95% { opacity: 0.1; }
+            0%,
+            90%,
+            100% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.1;
+            }
         }
 
         .wrapper {
@@ -188,7 +228,10 @@
             filter: drop-shadow(0 0 50px var(--glow-gold));
             transform: scale(1.03);
         }
-        .logo-text-group { display: flex; flex-direction: column; }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+        }
         .logo-eyebrow {
             font-family: 'Share Tech Mono', monospace;
             font-size: 10px;
@@ -204,7 +247,9 @@
             color: var(--white);
             line-height: 1;
         }
-        .logo .blink-title { color: var(--glow-gold); }
+        .logo .blink-title {
+            color: var(--glow-gold);
+        }
         .logo-sub {
             font-family: 'Share Tech Mono', monospace;
             font-size: 10px;
@@ -237,8 +282,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0,102,255,0.08);
-            border: 1px solid rgba(0,102,255,0.3);
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.3);
             padding: 6px 14px;
             font-family: 'Share Tech Mono', monospace;
             font-size: 10px;
@@ -246,19 +291,27 @@
             color: var(--glow-cyan);
         }
         .status-dot {
-            width: 6px; height: 6px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--glow-cyan);
             box-shadow: 0 0 8px var(--glow-cyan);
             animation: pulse-dot 1.5s infinite;
         }
         @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
         }
 
         .hero {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0,102,255,0.03) 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 102, 255, 0.03) 100%);
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-left: 3px solid var(--glow-gold);
             padding: 40px 48px;
@@ -269,7 +322,9 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 1px;
             background: linear-gradient(90deg, var(--glow-gold), var(--glow-cyan), transparent);
             opacity: 0.6;
@@ -289,7 +344,9 @@
             color: var(--white);
             line-height: 1.1;
         }
-        .hero-title .blink-title { color: var(--glow-gold); }
+        .hero-title .blink-title {
+            color: var(--glow-gold);
+        }
         .hero-desc {
             font-size: 16px;
             color: var(--text);
@@ -298,7 +355,9 @@
             line-height: 1.6;
             font-weight: 300;
         }
-        .hero-desc strong { color: var(--glow-gold); }
+        .hero-desc strong {
+            color: var(--glow-gold);
+        }
 
         .stats-row {
             display: grid;
@@ -386,12 +445,14 @@
         }
 
         .form-section {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, rgba(0,102,255,0.03) 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, rgba(0, 102, 255, 0.03) 100%);
             border: 1px solid rgba(212, 175, 55, 0.15);
             padding: 48px;
             margin-top: 40px;
         }
-        .form-group { margin-bottom: 20px; }
+        .form-group {
+            margin-bottom: 20px;
+        }
         .form-group label {
             display: block;
             font-family: 'Share Tech Mono', monospace;
@@ -404,7 +465,7 @@
         .form-group textarea {
             width: 100%;
             padding: 14px 18px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             color: var(--white);
@@ -433,7 +494,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(0,0,0,0.95);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(16px);
             border: 1px solid var(--glow-gold);
             border-radius: 16px;
@@ -444,7 +505,7 @@
             opacity: 0;
             transition: all 0.5s ease;
             pointer-events: none;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
             font-family: 'Rajdhani', sans-serif;
         }
         .toast.show {
@@ -452,7 +513,10 @@
             transform: translateX(-50%) translateY(0);
             pointer-events: auto;
         }
-        .toast i { margin-right: 12px; color: var(--glow-gold); }
+        .toast i {
+            margin-right: 12px;
+            color: var(--glow-gold);
+        }
 
         .footer {
             border-top: 1px solid var(--glass-border);
@@ -492,7 +556,9 @@
             opacity: 0.7;
             transition: opacity 0.3s;
         }
-        .footer-logos img:hover { opacity: 1; }
+        .footer-logos img:hover {
+            opacity: 1;
+        }
         .footer-quantum {
             font-family: 'Share Tech Mono', monospace;
             font-size: 9px;
@@ -507,7 +573,7 @@
             gap: 16px;
         }
         .paper-btn {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--glass-border);
             border-radius: 60px;
             padding: 12px 24px;
@@ -525,7 +591,9 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px var(--gold-glow);
         }
-        .paper-btn i { color: var(--glow-gold); }
+        .paper-btn i {
+            color: var(--glow-gold);
+        }
 
         .video-wrapper {
             position: relative;
@@ -546,34 +614,81 @@
         }
 
         @media (max-width: 992px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .hero-title { font-size: 40px; }
-            .form-row { grid-template-columns: 1fr; }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-title {
+                font-size: 40px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
         @media (max-width: 768px) {
-            .header { flex-direction: column; align-items: center; text-align: center; }
-            .header-right { align-items: center; }
-            .logo-block { flex-direction: column; }
-            .logo-img { height: 55px; }
-            .hero { padding: 24px; }
-            .hero-title { font-size: 32px; }
-            .hero-desc { font-size: 14px; }
-            .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .form-section { padding: 24px; }
-            .footer { flex-direction: column; text-align: center; }
-            .footer-right { text-align: center; }
-            .footer-logos { gap: 12px; }
-            .footer-logos img { height: 28px; }
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .header-right {
+                align-items: center;
+            }
+            .logo-block {
+                flex-direction: column;
+            }
+            .logo-img {
+                height: 55px;
+            }
+            .hero {
+                padding: 24px;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .hero-desc {
+                font-size: 14px;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .form-section {
+                padding: 24px;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-right {
+                text-align: center;
+            }
+            .footer-logos {
+                gap: 12px;
+            }
+            .footer-logos img {
+                height: 28px;
+            }
         }
         @media (max-width: 480px) {
-            .logo { font-size: 28px; }
-            .hero-title { font-size: 26px; }
-            .stat-value { font-size: 28px; }
-            .platform-grid { grid-template-columns: 1fr; }
-            .footer-logos img { height: 22px; }
+            .logo {
+                font-size: 28px;
+            }
+            .hero-title {
+                font-size: 26px;
+            }
+            .stat-value {
+                font-size: 28px;
+            }
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-logos img {
+                height: 22px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="grid-bg"></div>
     <div class="scan-sweep"></div>
@@ -587,7 +702,7 @@
         <!-- ===== HEADER ===== -->
         <header class="header">
             <div class="logo-block">
-                <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" class="logo-img" onerror="this.src='https://placehold.co/70x70/0066FF/white?text=MT'">
+                <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" class="logo-img" onerror="this.src='https://placehold.co/70x70/0066FF/white?text=MT'" />
                 <div class="logo-text-group">
                     <div class="logo-eyebrow">⚡ SOVEREIGN DEEP-TECH · IBM VERIFIED</div>
                     <div class="logo">
@@ -616,7 +731,7 @@
                 <span class="blink-title">Quantum</span> Utility for the <span class="blink-title">Real</span> World
             </h1>
             <p class="hero-desc">
-                <strong>Hardware-verified · Patent-protected · Live</strong><br>
+                <strong>Hardware-verified · Patent-protected · Live</strong><br />
                 MindTech is the first African entity to achieve IBM-verified quantum entanglement (CHSH S=2.76). We are building the sovereign quantum stack for climate, biodiversity, agriculture, security, and education.
             </p>
         </section>
@@ -747,16 +862,11 @@
                 <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--white);">The African Quantum Utility</h2>
             </div>
             <div class="video-wrapper">
-                <iframe
-                    id="youtubePlayer"
-                    src="https://www.youtube.com/embed/fUnC-Ws5KW0?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3"
-                    title="The African Quantum Utility"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
+                <iframe id="youtubePlayer" src="https://www.youtube.com/embed/fUnC-Ws5KW0?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3" title="The African Quantum Utility" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
                 </iframe>
             </div>
             <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;">
-                <strong>CHSH S=2.76 · 38% above classical · 98.4% correlation</strong><br>
+                <strong>CHSH S=2.76 · 38% above classical · 98.4% correlation</strong><br />
                 Built in Africa · Sovereign · IBM-Verified · Patent-Protected
             </p>
         </section>
@@ -770,16 +880,16 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label><i class="fas fa-user"></i> Full Name</label>
-                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required />
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="email" placeholder="Enter your email address" required>
+                        <input type="email" id="email" placeholder="Enter your email address" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-building"></i> Organization</label>
-                    <input type="text" id="organization" placeholder="Your company or institution">
+                    <input type="text" id="organization" placeholder="Your company or institution" />
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-comment"></i> How can we partner?</label>
@@ -789,6 +899,23 @@
                     <i class="fas fa-rocket"></i> Send Enquiry
                 </button>
             </form>
+            <div id="formStatus" style="margin-top:16px;display:none;padding:16px;border-radius:16px;background:rgba(0,0,0,0.4);border:1px solid var(--glass-border);">
+                <p style="font-size:14px;color:var(--white);margin-bottom:8px;"><i class="fas fa-check-circle" style="color:var(--glow-gold);"></i> <span id="statusTitle">Your enquiry has been prepared.</span></p>
+                <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Please send the email below to <strong style="color:var(--glow-gold);">mindtech.industriesai@gmail.com</strong></p>
+                <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text);word-break:break-all;max-height:150px;overflow-y:auto;" id="emailPreview"></div>
+                <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
+                    <button onclick="copyEmail()" class="glass-btn" style="padding:8px 20px;font-size:12px;flex:1;text-align:center;min-width:120px;">
+                        <i class="fas fa-copy"></i> Copy Email
+                    </button>
+                    <button onclick="sendEmail()" class="glass-btn glass-btn-gold" style="padding:8px 20px;font-size:12px;flex:1;text-align:center;min-width:120px;">
+                        <i class="fas fa-envelope"></i> Open Mail App
+                    </button>
+                    <button onclick="closeFormStatus()" class="glass-btn" style="padding:8px 20px;font-size:12px;flex:0.5;text-align:center;">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+                <p style="font-size:10px;color:var(--text-dim);margin-top:8px;">Your data is secure · POPIA/GDPR aligned</p>
+            </div>
             <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">
                 <i class="fas fa-lock"></i> Your data is secure · POPIA/GDPR aligned
             </p>
@@ -798,19 +925,19 @@
         <footer class="footer">
             <div class="footer-left">
                 <div class="footer-logos">
-                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries">
-                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS">
-                    <img src="https://iili.io/COoSb7n.png" alt="Tensora">
-                    <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard">
-                    <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno">
-                    <img src="https://i.postimg.cc/8zVP7V0t/cleanmachine-image-removebg-preview.png" alt="CleanMachine">
-                    <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-(1).png" alt="Quantum Internet">
+                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" />
+                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS" />
+                    <img src="https://iili.io/COoSb7n.png" alt="Tensora" />
+                    <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard" />
+                    <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno" />
+                    <img src="https://i.postimg.cc/8zVP7V0t/cleanmachine-image-removebg-preview.png" alt="CleanMachine" />
+                    <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-1.png" alt="Quantum Internet" />
                 </div>
                 <span style="display:block;margin-top:6px;">© 2026 MindTech Industries · Sovereign Deep-Tech</span>
             </div>
             <div class="footer-right">
                 <div class="footer-quantum">
-                    CHSH S=2.76 · 98.4% · SA 2026/05142<br>
+                    CHSH S=2.76 · 98.4% · SA 2026/05142<br />
                     IBM Job: d8uhvl4bp3hs738628cg
                 </div>
                 <span style="display:block;margin-top:4px;font-size:8px;color:var(--text-dim);">
@@ -826,8 +953,10 @@
 
     <script>
         // ============================================================
-        // MINDTECH WEBSITE — FULL INTERACTIVE
+        // MINDTECH WEBSITE — FULL INTERACTIVE WITH FORM FIX
         // ============================================================
+
+        let lastFormData = null;
 
         function updateTimestamp() {
             const now = new Date();
@@ -846,6 +975,49 @@
             toast._timer = setTimeout(() => toast.classList.remove('show'), 4500);
         }
 
+        function buildEmailBody(name, email, org, msg) {
+            return `Name: ${name}%0D%0AEmail: ${email}%0D%0AOrganization: ${org || 'Not provided'}%0D%0A%0D%0AMessage:%0D%0A${msg}%0D%0A%0D%0A---%0D%0ASent from MindTech Industries Website`;
+        }
+
+        function sendEmail() {
+            if (!lastFormData) return;
+            const { name, email, org, msg } = lastFormData;
+            const subject = `MindTech Enquiry from ${name}`;
+            const body = buildEmailBody(name, email, org, msg);
+            const mailtoLink =
+                `mailto:mindtech.industriesai@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+            window.location.href = mailtoLink;
+            showToast('📧 Opening your email client...');
+        }
+
+        function copyEmail() {
+            if (!lastFormData) return;
+            const { name, email, org, msg } = lastFormData;
+            const subject = `MindTech Enquiry from ${name}`;
+            const plainBody =
+                `To: mindtech.industriesai@gmail.com\nSubject: ${subject}\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org || 'Not provided'}\n\nMessage:\n${msg}\n\n---\nSent from MindTech Industries Website`;
+
+            navigator.clipboard.writeText(plainBody).then(() => {
+                showToast('✅ Email copied to clipboard!');
+            }).catch(() => {
+                // Fallback: select and copy from text area
+                const preview = document.getElementById('emailPreview');
+                const range = document.createRange();
+                range.selectNode(preview);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                showToast('✅ Email copied to clipboard!');
+            });
+        }
+
+        function closeFormStatus() {
+            document.getElementById('formStatus').style.display = 'none';
+            document.getElementById('enquiryForm').reset();
+            lastFormData = null;
+        }
+
         document.getElementById('enquiryForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -859,15 +1031,23 @@
                 return;
             }
 
+            // Store for later use
+            lastFormData = { name, email, org, msg };
+
+            // Build email preview
             const subject = `MindTech Enquiry from ${name}`;
-            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AOrganization: ${org}%0D%0A%0D%0AMessage:%0D%0A${msg}%0D%0A%0D%0A---%0D%0ASent from MindTech Industries Website`;
-            const mailtoLink = `mailto:mindtech.industriesai@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            const plainBody =
+                `To: mindtech.industriesai@gmail.com\nSubject: ${subject}\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org}\n\nMessage:\n${msg}\n\n---\nSent from MindTech Industries Website`;
+            document.getElementById('emailPreview').textContent = plainBody;
+            document.getElementById('statusTitle').textContent = '✅ Your enquiry has been prepared.';
 
-            window.location.href = mailtoLink;
-            showToast('✅ Opening your email client. Thank you for reaching out!');
-            this.reset();
+            // Show status panel
+            const statusDiv = document.getElementById('formStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            console.log('📧 Enquiry submitted to mindtech.industriesai@gmail.com');
+            // Log event
+            console.log('📧 Enquiry prepared for mindtech.industriesai@gmail.com');
             console.log(`   From: ${name} <${email}>`);
             console.log(`   Org: ${org}`);
             console.log(`   Message: ${msg.substring(0, 60)}...`);
@@ -879,6 +1059,7 @@
 
         // YouTube IFrame API
         let player;
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtubePlayer', {
                 events: {
@@ -887,7 +1068,11 @@
                 }
             });
         }
-        function onPlayerReady(event) { console.log('YouTube Player ready.'); }
+
+        function onPlayerReady(event) {
+            console.log('YouTube Player ready.');
+        }
+
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
                 console.log('Video ended.');

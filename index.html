@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>MindTech Industries · African Quantum AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+        :root {
+            --black: #020407;
+            --deep: #050c14;
+            --panel: rgba(8, 15, 26, 0.7);
+            --border: #0d2035;
+            --glow-blue: #0066FF;
+            --glow-gold: #FFD700;
+            --glow-cyan: #00ffcc;
+            --text: #8ab4cc;
+            --text-dim: #2d4a5e;
+            --white: #e8f4ff;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(0, 102, 255, 0.15);
+            --gold-glow: rgba(255, 215, 0, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--black);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Noise & Grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,102,255,0.015) 2px, rgba(0,102,255,0.015) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,102,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .scan-sweep {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,102,255,0.4), transparent);
+            animation: sweep 8s linear infinite;
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        @keyframes sweep {
+            0% { top: 0; opacity: 1; }
+            95% { opacity: 0.3; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        .corner {
+            position: fixed;
+            width: 30px; height: 30px;
+            border-color: rgba(212, 175, 55, 0.3);
+            border-style: solid;
+            z-index: 500;
+        }
+        .corner-tl { top: 16px; left: 16px; border-width: 2px 0 0 2px; }
+        .corner-tr { top: 16px; right: 16px; border-width: 2px 2px 0 0; }
+        .corner-bl { bottom: 16px; left: 16px; border-width: 0 0 2px 2px; }
+        .corner-br { bottom: 16px; right: 16px; border-width: 0 2px 2px 0; }
+
+        .blink-title { animation: blinkText 3s infinite; display: inline-block; }
+        @keyframes blinkText {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.1; }
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ===== GLASSMORPHISM ===== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            padding: 28px 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .glass-card:hover {
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 40px var(--gold-glow);
+        }
+        .glass-card.gold-border {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+        .glass-card.gold-border:hover {
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 40px var(--gold-glow);
+        }
+
+        .glass-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--glow-gold);
+            background: rgba(212, 175, 55, 0.06);
+            color: var(--glow-gold);
+            backdrop-filter: blur(8px);
+            font-family: 'Rajdhani', sans-serif;
+        }
+        .glass-btn:hover {
+            background: var(--glow-gold);
+            color: var(--black);
+            box-shadow: 0 0 48px var(--gold-glow);
+            transform: translateY(-3px);
+        }
+        .glass-btn-gold {
+            background: var(--glow-gold);
+            color: var(--black);
+            border-color: var(--glow-gold);
+        }
+        .glass-btn-gold:hover {
+            background: #cca300;
+            border-color: #cca300;
+            color: var(--black);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 0 25px var(--gold-glow));
+            transition: filter 0.3s, transform 0.3s;
+        }
+        .logo-img:hover {
+            filter: drop-shadow(0 0 50px var(--glow-gold));
+            transform: scale(1.03);
+        }
+        .logo-text-group { display: flex; flex-direction: column; }
+        .logo-eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--glow-gold);
+            text-transform: uppercase;
+            animation: blinkText 2s infinite;
+        }
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: var(--white);
+            line-height: 1;
+        }
+        .logo .blink-title { color: var(--glow-gold); }
+        .logo-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: var(--text-dim);
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+        .header-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .quantum-badge-top {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--glow-gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,102,255,0.08);
+            border: 1px solid rgba(0,102,255,0.3);
+            padding: 6px 14px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--glow-cyan);
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--glow-cyan);
+            box-shadow: 0 0 8px var(--glow-cyan);
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0,102,255,0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-left: 3px solid var(--glow-gold);
+            padding: 40px 48px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--glow-gold), var(--glow-cyan), transparent);
+            opacity: 0.6;
+        }
+        .hero-eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--glow-gold);
+            margin-bottom: 6px;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 4px;
+            color: var(--white);
+            line-height: 1.1;
+        }
+        .hero-title .blink-title { color: var(--glow-gold); }
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text);
+            margin: 12px 0 0;
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .hero-desc strong { color: var(--glow-gold); }
+
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 2px;
+            color: var(--glow-gold);
+        }
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ===== PLATFORM GRID ===== */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .platform-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .platform-item:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        .platform-item .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .platform-item .name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+        .platform-item .desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+        .platform-item .status {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 16px;
+            border-radius: 40px;
+            background: rgba(0, 255, 136, 0.08);
+            color: var(--glow-cyan);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            font-size: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* ===== ENQUIRY FORM ===== */
+        .form-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, rgba(0,102,255,0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 48px;
+            margin-top: 40px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--white);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ===== SUCCESS TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glow-gold);
+            border-radius: 16px;
+            padding: 16px 32px;
+            color: var(--white);
+            font-size: 14px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            font-family: 'Rajdhani', sans-serif;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .toast i { margin-right: 12px; color: var(--glow-gold); }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-left {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            line-height: 2;
+        }
+        .footer-right {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-align: right;
+            line-height: 2;
+        }
+        .footer-logos {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-logos img {
+            height: 35px;
+            width: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .footer-logos img:hover { opacity: 1; }
+        .footer-quantum {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--glow-gold);
+            letter-spacing: 1px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .hero-title { font-size: 40px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; align-items: center; text-align: center; }
+            .header-right { align-items: center; }
+            .logo-block { flex-direction: column; }
+            .logo-img { height: 55px; }
+            .hero { padding: 24px; }
+            .hero-title { font-size: 32px; }
+            .hero-desc { font-size: 14px; }
+            .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .form-section { padding: 24px; }
+            .footer { flex-direction: column; text-align: center; }
+            .footer-right { text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .logo { font-size: 28px; }
+            .hero-title { font-size: 26px; }
+            .stat-value { font-size: 28px; }
+            .platform-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="scan-sweep"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="wrapper">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="logo-block">
+                <img src="https://i.postimg.cc/QtyvGF3B/Quantum-AI-image-logo-removebg-preview.png" alt="MindTech Industries" class="logo-img" onerror="this.src='https://placehold.co/70x70/0066FF/white?text=MT'">
+                <div class="logo-text-group">
+                    <div class="logo-eyebrow">⚡ SOVEREIGN DEEP-TECH · IBM VERIFIED</div>
+                    <div class="logo">
+                        <span class="blink-title">MindTech</span> Industries
+                    </div>
+                    <div class="logo-sub">AFRICAN QUANTUM UTILITY</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="quantum-badge-top">
+                    <i class="fas fa-shield-alt"></i>
+                    CHSH S=2.76 · 98.4% · SA 2026/05142
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    QUANTUM ACTIVE
+                </div>
+                <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;" id="ts">INITIALIZING...</span>
+            </div>
+        </header>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero glass-card gold-border">
+            <div class="hero-eyebrow blink-title">⚛️ AFRICA'S QUANTUM FUTURE · BUILT TODAY</div>
+            <h1 class="hero-title">
+                <span class="blink-title">Quantum</span> Utility for the <span class="blink-title">Real</span> World
+            </h1>
+            <p class="hero-desc">
+                <strong>Hardware-verified · Patent-protected · Live</strong><br>
+                MindTech is the first African entity to achieve IBM-verified quantum entanglement (CHSH S=2.76). We are building the sovereign quantum stack for climate, biodiversity, agriculture, security, and education.
+            </p>
+        </section>
+
+        <!-- ===== STATS ===== -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value">2.76</div>
+                <div class="stat-label">CHSH S · Bell Violation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">98.4%</div>
+                <div class="stat-label">Quantum Correlation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">38%</div>
+                <div class="stat-label">Above Classical Limit</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">16</div>
+                <div class="stat-label">Live Platforms</div>
+            </div>
+        </div>
+
+        <!-- ===== PLATFORM GRID ===== -->
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--white);margin:20px 0 10px;">
+            <i class="fas fa-cube" style="color:var(--glow-gold);"></i> Our Quantum Stack
+        </h2>
+        <div class="platform-grid">
+            <a href="https://quantum-nature-modules.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌍</span>
+                <span class="name">Quantum AI Hub</span>
+                <span class="desc">Climate · Biodiversity · Agriculture</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://symphonious-pothos-042c80.netlify.app" target="_blank" class="platform-item">
+                <span class="icon">🧠</span>
+                <span class="name">Khensani AI</span>
+                <span class="desc">Quantum-powered Education</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://entangleguard.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🛡️</span>
+                <span class="name">EntangleGuard</span>
+                <span class="desc">Quantum-secure Communications</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://moleculemind.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🧬</span>
+                <span class="name">Tensora</span>
+                <span class="desc">Quantum Drug Discovery</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://mindcell-frontend.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🔋</span>
+                <span class="name">MindCell™</span>
+                <span class="desc">Quantum Power Predictor</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://luvuno-quantum-chat-africa-os.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌐</span>
+                <span class="name">Luvuno Quantum</span>
+                <span class="desc">Sovereign Edge AI</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://quantum-alpha-frontend.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">📈</span>
+                <span class="name">Quantum Alpha Engine</span>
+                <span class="desc">Financial Intelligence</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://quantum-internet-42yz.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌍</span>
+                <span class="name">Quantum Internet</span>
+                <span class="desc">JHB ↔ PTA QKD Link</span>
+                <span class="status">✅ Live</span>
+            </a>
+        </div>
+
+        <!-- ===== ENQUIRY FORM ===== -->
+        <section class="form-section glass-card gold-border" id="contact">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--white);margin-bottom:24px;">
+                <i class="fas fa-paper-plane" style="color:var(--glow-gold);"></i> Let's Build Africa's Quantum Future
+            </h2>
+            <form id="enquiryForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="fullName" placeholder="e.g. Khulu Mdluli" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="email" placeholder="e.g. name@company.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> Organization</label>
+                    <input type="text" id="organization" placeholder="Your company or institution">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> How can we partner?</label>
+                    <textarea id="message" placeholder="Tell us about your interest in quantum technology, partnerships, or investment opportunities..." required></textarea>
+                </div>
+                <button type="submit" class="glass-btn glass-btn-gold" style="width:100%;padding:16px;">
+                    <i class="fas fa-rocket"></i> Send Enquiry
+                </button>
+            </form>
+            <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">
+                <i class="fas fa-lock"></i> Your data is secure · POPIA/GDPR aligned
+            </p>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-left">
+                <div class="footer-logos">
+                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech" onerror="this.style.display='none'">
+                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS" onerror="this.style.display='none'">
+                    <span class="footer-quantum">⚛️ QUANTUM AI</span>
+                </div>
+                <span style="display:block;margin-top:6px;">© 2026 MindTech Industries · Sovereign Deep-Tech</span>
+            </div>
+            <div class="footer-right">
+                <div class="footer-quantum">
+                    CHSH S=2.76 · 98.4% · SA 2026/05142<br>
+                    IBM Job: d8uhvl4bp3hs738628cg
+                </div>
+                <span style="display:block;margin-top:4px;font-size:8px;color:var(--text-dim);">
+                    ENSafrica Pro Bono · Matter 0564929
+                </span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Message sent successfully!</span></div>
+
+    <script>
+        // ============================================================
+        // MINDTECH WEBSITE — FULL INTERACTIVE
+        // ============================================================
+
+        // ===== TIMESTAMP =====
+        function updateTimestamp() {
+            const now = new Date();
+            const ts = now.toISOString().replace('T', ' · ').substring(0, 22) + ' UTC';
+            document.getElementById('ts').textContent = ts;
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toastMsg');
+            msgSpan.textContent = message;
+            toast.className = 'toast show';
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 4500);
+        }
+
+        // ===== FORM SUBMISSION =====
+        document.getElementById('enquiryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const org = document.getElementById('organization').value.trim() || 'Not provided';
+            const msg = document.getElementById('message').value.trim();
+
+            if (!name || !email || !msg) {
+                showToast('⚠️ Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Construct email body
+            const subject = `MindTech Enquiry from ${name}`;
+            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AOrganization: ${org}%0D%0A%0D%0AMessage:%0D%0A${msg}%0D%0A%0D%0A---%0D%0ASent from MindTech Industries Website`;
+
+            // Use mailto: as fallback (most reliable for client-side)
+            const mailtoLink = `mailto:mindtech.industriesai@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Try to open mail client
+            window.location.href = mailtoLink;
+
+            // Show success message
+            showToast('✅ Opening your email client. Thank you for reaching out!');
+            this.reset();
+
+            // Log event
+            console.log('📧 Enquiry submitted to mindtech.industriesai@gmail.com');
+            console.log(`   From: ${name} <${email}>`);
+            console.log(`   Org: ${org}`);
+            console.log(`   Message: ${msg.substring(0, 60)}...`);
+        });
+
+        console.log('🚀 MindTech Industries Website · Quantum Utility');
+        console.log('   ⚛️ CHSH S=2.76 · 98.4% · SA 2026/05142');
+        console.log('   📧 Enquiries go to mindtech.industriesai@gmail.com');
+    </script>
+</body>
+</html>

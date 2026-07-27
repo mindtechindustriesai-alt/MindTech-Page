@@ -613,6 +613,30 @@
             border: none;
         }
 
+        /* Form Submit Success/Error States */
+        .form-submit-success {
+            background: rgba(0, 204, 136, 0.1);
+            border: 1px solid rgba(0, 204, 136, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+        .form-submit-success.show {
+            display: block;
+        }
+        .form-submit-error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+        .form-submit-error.show {
+            display: block;
+        }
+
         @media (max-width: 992px) {
             .stats-row {
                 grid-template-columns: repeat(2, 1fr);
@@ -871,51 +895,68 @@
             </p>
         </section>
 
-        <!-- ===== ENQUIRY FORM ===== -->
+        <!-- ===== ENQUIRY FORM WITH FORMSUBMIT ===== -->
         <section class="form-section glass-card gold-border" id="contact">
             <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--white);margin-bottom:24px;">
                 <i class="fas fa-paper-plane" style="color:var(--glow-gold);"></i> Let's Build Africa's Quantum Future
             </h2>
-            <form id="enquiryForm">
+            
+            <!-- FORMSUBMIT FORM - EMAILS GO TO mindtech.industriesai@gmail.com -->
+            <form id="enquiryForm" action="https://formsubmit.co/mindtech.industriesai@gmail.com" method="POST">
+                <!-- FormSubmit Required Hidden Fields -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="MindTech Industries - New Enquiry from Website">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Thank you for contacting MindTech Industries. We'll respond within 24 hours. WhatsApp: +27 60 300 4859">
+                <input type="hidden" name="_cc" value="mindtech.industriesai@gmail.com">
+                <input type="hidden" name="_next" value="https://your-site.com/thank-you.html">
+                
                 <div class="form-row">
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> Full Name</label>
-                        <input type="text" id="fullName" placeholder="Enter your full name" required />
+                        <label><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" id="fullName" name="name" placeholder="Enter your full name" required />
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="email" placeholder="Enter your email address" required />
+                        <label><i class="fas fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required />
                     </div>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-building"></i> Organization</label>
-                    <input type="text" id="organization" placeholder="Your company or institution" />
+                    <input type="text" id="organization" name="organization" placeholder="Your company or institution" />
                 </div>
                 <div class="form-group">
-                    <label><i class="fas fa-comment"></i> How can we partner?</label>
-                    <textarea id="message" placeholder="Tell us about your interest in quantum technology, partnerships, or investment opportunities..." required></textarea>
+                    <label><i class="fas fa-comment"></i> How can we partner? *</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your interest in quantum technology, partnerships, or investment opportunities..." required></textarea>
                 </div>
                 <button type="submit" class="glass-btn glass-btn-gold" style="width:100%;padding:16px;">
                     <i class="fas fa-rocket"></i> Send Enquiry
                 </button>
             </form>
-            <div id="formStatus" style="margin-top:16px;display:none;padding:16px;border-radius:16px;background:rgba(0,0,0,0.4);border:1px solid var(--glass-border);">
-                <p style="font-size:14px;color:var(--white);margin-bottom:8px;"><i class="fas fa-check-circle" style="color:var(--glow-gold);"></i> <span id="statusTitle">Your enquiry has been prepared.</span></p>
-                <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Please send the email below to <strong style="color:var(--glow-gold);">mindtech.industriesai@gmail.com</strong></p>
-                <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text);word-break:break-all;max-height:150px;overflow-y:auto;" id="emailPreview"></div>
-                <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
-                    <button onclick="copyEmail()" class="glass-btn" style="padding:8px 20px;font-size:12px;flex:1;text-align:center;min-width:120px;">
-                        <i class="fas fa-copy"></i> Copy Email
-                    </button>
-                    <button onclick="sendEmail()" class="glass-btn glass-btn-gold" style="padding:8px 20px;font-size:12px;flex:1;text-align:center;min-width:120px;">
-                        <i class="fas fa-envelope"></i> Open Mail App
-                    </button>
-                    <button onclick="closeFormStatus()" class="glass-btn" style="padding:8px 20px;font-size:12px;flex:0.5;text-align:center;">
-                        <i class="fas fa-times"></i> Close
-                    </button>
-                </div>
-                <p style="font-size:10px;color:var(--text-dim);margin-top:8px;">Your data is secure · POPIA/GDPR aligned</p>
+            
+            <!-- Form Submit Success Message -->
+            <div id="formSuccess" class="form-submit-success">
+                <p style="color: var(--glow-cyan);">
+                    <i class="fas fa-check-circle"></i> 
+                    <strong>Enquiry sent successfully!</strong>
+                </p>
+                <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">
+                    Our team will respond within 24 hours. 
+                    <br>For urgent matters: WhatsApp +27 60 300 4859
+                </p>
             </div>
+            
+            <!-- Form Submit Error Message -->
+            <div id="formError" class="form-submit-error">
+                <p style="color: #FF6B6B;">
+                    <i class="fas fa-exclamation-circle"></i> 
+                    <strong>Something went wrong.</strong>
+                </p>
+                <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">
+                    Please try again or email us directly at <strong style="color:var(--glow-gold);">mindtech.industriesai@gmail.com</strong>
+                </p>
+            </div>
+            
             <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">
                 <i class="fas fa-lock"></i> Your data is secure · POPIA/GDPR aligned
             </p>
@@ -953,11 +994,10 @@
 
     <script>
         // ============================================================
-        // MINDTECH WEBSITE — FULL INTERACTIVE WITH FORM FIX
+        // MINDTECH WEBSITE — FULL INTERACTIVE WITH FORMSUBMIT
         // ============================================================
 
-        let lastFormData = null;
-
+        // Timestamp
         function updateTimestamp() {
             const now = new Date();
             const ts = now.toISOString().replace('T', ' · ').substring(0, 22) + ' UTC';
@@ -966,6 +1006,7 @@
         updateTimestamp();
         setInterval(updateTimestamp, 1000);
 
+        // Toast Notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const msgSpan = document.getElementById('toastMsg');
@@ -975,87 +1016,49 @@
             toast._timer = setTimeout(() => toast.classList.remove('show'), 4500);
         }
 
-        function buildEmailBody(name, email, org, msg) {
-            return `Name: ${name}%0D%0AEmail: ${email}%0D%0AOrganization: ${org || 'Not provided'}%0D%0A%0D%0AMessage:%0D%0A${msg}%0D%0A%0D%0A---%0D%0ASent from MindTech Industries Website`;
-        }
-
-        function sendEmail() {
-            if (!lastFormData) return;
-            const { name, email, org, msg } = lastFormData;
-            const subject = `MindTech Enquiry from ${name}`;
-            const body = buildEmailBody(name, email, org, msg);
-            const mailtoLink =
-                `mailto:mindtech.industriesai@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-            window.location.href = mailtoLink;
-            showToast('📧 Opening your email client...');
-        }
-
-        function copyEmail() {
-            if (!lastFormData) return;
-            const { name, email, org, msg } = lastFormData;
-            const subject = `MindTech Enquiry from ${name}`;
-            const plainBody =
-                `To: mindtech.industriesai@gmail.com\nSubject: ${subject}\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org || 'Not provided'}\n\nMessage:\n${msg}\n\n---\nSent from MindTech Industries Website`;
-
-            navigator.clipboard.writeText(plainBody).then(() => {
-                showToast('✅ Email copied to clipboard!');
-            }).catch(() => {
-                // Fallback: select and copy from text area
-                const preview = document.getElementById('emailPreview');
-                const range = document.createRange();
-                range.selectNode(preview);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-                document.execCommand('copy');
-                window.getSelection().removeAllRanges();
-                showToast('✅ Email copied to clipboard!');
-            });
-        }
-
-        function closeFormStatus() {
-            document.getElementById('formStatus').style.display = 'none';
-            document.getElementById('enquiryForm').reset();
-            lastFormData = null;
-        }
-
+        // ===== FORMSUBMIT HANDLING =====
         document.getElementById('enquiryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
+            // Let FormSubmit handle the actual submission
+            // We just show success/error states based on URL params
+            
+            // Log the submission
             const name = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
             const org = document.getElementById('organization').value.trim() || 'Not provided';
             const msg = document.getElementById('message').value.trim();
-
-            if (!name || !email || !msg) {
-                showToast('⚠️ Please fill in all required fields.', 'error');
-                return;
-            }
-
-            // Store for later use
-            lastFormData = { name, email, org, msg };
-
-            // Build email preview
-            const subject = `MindTech Enquiry from ${name}`;
-            const plainBody =
-                `To: mindtech.industriesai@gmail.com\nSubject: ${subject}\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org}\n\nMessage:\n${msg}\n\n---\nSent from MindTech Industries Website`;
-            document.getElementById('emailPreview').textContent = plainBody;
-            document.getElementById('statusTitle').textContent = '✅ Your enquiry has been prepared.';
-
-            // Show status panel
-            const statusDiv = document.getElementById('formStatus');
-            statusDiv.style.display = 'block';
-            statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-            // Log event
-            console.log('📧 Enquiry prepared for mindtech.industriesai@gmail.com');
+            
+            console.log('📧 Form submitted to mindtech.industriesai@gmail.com');
             console.log(`   From: ${name} <${email}>`);
             console.log(`   Org: ${org}`);
             console.log(`   Message: ${msg.substring(0, 60)}...`);
+            
+            // Show toast
+            showToast('📧 Sending your enquiry...');
+            
+            // The form will submit to FormSubmit automatically
+            // Check for success/error after redirect
         });
 
-        console.log('🚀 MindTech Industries Website · Quantum Utility');
-        console.log('   ⚛️ CHSH S=2.76 · 98.4% · SA 2026/05142');
-        console.log('   📧 Enquiries go to mindtech.industriesai@gmail.com');
+        // Check URL for FormSubmit response
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            
+            if (success === 'true' || success === '1') {
+                document.getElementById('formSuccess').classList.add('show');
+                document.getElementById('formError').classList.remove('show');
+                showToast('✅ Enquiry sent successfully!');
+                // Remove params from URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            if (error) {
+                document.getElementById('formError').classList.add('show');
+                document.getElementById('formSuccess').classList.remove('show');
+                showToast('❌ Error sending enquiry. Please try again.', 'error');
+            }
+        });
 
         // YouTube IFrame API
         let player;
@@ -1078,10 +1081,16 @@
                 console.log('Video ended.');
             }
         }
+        
+        // Load YouTube API
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        console.log('🚀 MindTech Industries Website · Quantum Utility');
+        console.log('   ⚛️ CHSH S=2.76 · 98.4% · SA 2026/05142');
+        console.log('   📧 Enquiries go to mindtech.industriesai@gmail.com');
     </script>
 </body>
 </html>
